@@ -1,5 +1,15 @@
 "use strict";
-var observable = window.observable || (function() {
+(function(root, factory) {
+	if (typeof define === "function" && define.amd) { // for AMD and normal
+		define(function() {
+			return root.observable = factory();
+		});
+	} else if (typeof module === "object" && module.exports) { // for CommonJS and normal
+		module.exports = (root.observable = factory());
+	} else { // normal
+		root.observable = factory();
+	}
+}(this, function() {
 	var isArray = function(arr) {
 		return Object.prototype.toString.call(arr) === "[object Array]";
 	}
@@ -40,6 +50,18 @@ var observable = window.observable || (function() {
 				}
 			} else if (isFunc(obj)) {
 				// bind for func
+				return function(){
+					// console.log("before func exec");
+					try{
+						obj.apply(this, arguments);
+						// console.log("after func exec");
+					}catch(ex){
+						// console.log("whe error happened");
+						throw ex;
+					}finally{
+						// console.log("exec finished");
+					}
+				}
 			} else {
 				// normal object
 				try {
@@ -49,11 +71,11 @@ var observable = window.observable || (function() {
 					for (var prop in obj) {
 						if (isObj(obj[prop])) {
 							returnObj.observe(obj[prop], valueChangedHandler, path + "." + prop);
-							return;
 						} else if (isArray(obj[prop])) {
 							obj[prop] = returnObj.observe(obj[prop], valueChangedHandler, path + "." + prop);
 						} else if (isFunc(obj[prop])) {
 							// do nothing
+							obj[prop] = returnObj.observe(obj[prop], valueChangedHandler, path + "." + prop);
 						} else {
 							if (hasProp.call(obj, prop)) {
 								// add setter and getter to this prop
@@ -107,4 +129,4 @@ var observable = window.observable || (function() {
 		}
 	};
 	return returnObj;
-})();
+}));

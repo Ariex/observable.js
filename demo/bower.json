@@ -1,0 +1,19 @@
+{
+    "name": "unit-test",
+    "version": "0.0.0",
+    "homepage": "https://github.com/Ariex/observable.js",
+    "authors": [
+        "Ariex <ariexcorn@gmail.com>"
+    ],
+    "license": "MIT",
+    "directory": "vendor",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "vendor",
+        "spec"
+    ],
+    "dependencies": {
+        "requirejs": "~2.1.17"
+    }
+}
