@@ -8,7 +8,5 @@ Demo is available in demo folder. Library is supporting AMD and CMD and normal r
 
 ## Log
 2014/11/04 can monitor normal value property and array.
-2015/05/09
-	- update the lib to support AMD/CMD/plan JS reference
-	- add some unit tests
-	- update demo page
+
+2015/05/09 update the lib to support AMD/CMD/plan JS reference; add some unit tests; update demo page
